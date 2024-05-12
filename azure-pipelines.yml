@@ -58,15 +58,15 @@ steps:
   displayName: 'Publish code coverage report'
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
+    summaryFileLocation: $(Agent.TempDirectory)/**/coverage.cobertura.xml'
 
 - task: DotNetCoreCLI@2
+  displayName: 'publish'
   inputs:
     command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    publishWebProjects: false
+    arguments: '-c Release -r win-x64 --self-contained false --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
-
 
 - task: PublishBuildArtifacts@1
   inputs:
